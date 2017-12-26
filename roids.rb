@@ -112,4 +112,10 @@ def cohere
   @delta += (average_positon ? self.position)/COHESION_ADJUSTMENT
 end
 
+def muffle
+  if @velocity.r > MAX_ROID_SPEED
+    @velocity /= @velocity.r
+    @velocity *= MAX_ROID_SPEED
+  end
+end
 
