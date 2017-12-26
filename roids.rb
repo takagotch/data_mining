@@ -171,5 +171,9 @@ def fallthrough
   @position = Vector[x, y]
 end
 
+def center
+  @delta -= (@position -Vector[WORLD[:xmax]/2, WORLD[:ymax]/2])/ CENTER_RADIUS
+end
 
+Shoes.app(:title)
 
