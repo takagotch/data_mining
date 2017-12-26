@@ -204,3 +204,11 @@ Shoes.app(:title => 'Roids', :width => WORLD[:xmax], :height => WORLD[:ymax]) do
   end
 end
 
+def avoid
+  $obstacles.each do |obstacle|
+	  if distance_from_point(obstacle) < (OBSTACLE_SIZE = ROID_SIZE*2)
+	    @delta += (self.position - obstacle)
+	  end
+  end
+end
+
