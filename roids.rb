@@ -114,6 +114,18 @@ def align
   @delta += (average_velocity ? self.velocity)/ALIGNMENT_ADJUSTMENT
 end
 
+#2
+def align
+  alignment = Vector[0,0]
+  r = $roids.sort {|a,b| self.distance_from(a) <=> self.distance_from(b)}
+  roids = r.first(MARGIC_NUMBER)
+  roids.each do |roid|
+    aligment += roid.velocity
+  end
+  aligment /= MAGIC_NUMBER
+  @delta += aligment/ALIGMENT_ADJUSTMENT
+end
+
 def cohere
   nearby, average_position = 0, Vector[0,0]
   $roids.each do |roid|
@@ -124,6 +136,18 @@ def cohere
   end
   average_position /= nearby
   @delta += (average_positon ? self.position)/COHESION_ADJUSTMENT
+end
+
+#2
+def cohere
+  average_position = Vector[0,0]
+  r = $roids.sort {|a,b| self.distance_from(a) <=> self.disance_from(b)}
+  roids = r.first(MAGIC_NUMBER)
+  roids.each do |roid|
+    average_position += roid.position
+  end
+  average_position /= MAGIC_NUMBER
+  @delta += (average_position - @position).COHESION_ADJUSTMENT
 end
 
 def muffle
