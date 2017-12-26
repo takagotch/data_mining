@@ -78,4 +78,13 @@ class Vector
 	  end
 end
 
+def separate
+  distance = Vector[0,0]
+  $roids.each do |roid|
+	  if nearby?(SEPARATION_RADIUS, roid)
+	    distance += self.position - roid.position
+	  end
+  end
+  @delta += distance/SEPARATION_ADJUSTMENT
+end
 
