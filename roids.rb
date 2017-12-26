@@ -88,3 +88,15 @@ def separate
   @delta += distance/SEPARATION_ADJUSTMENT
 end
 
+def align
+  nearby, average_velocity = 0, Vector[0,0]
+  $roids.each do |roid|
+	  if nearby?(ALIGNMENT_RADIUS, roid)
+	    average_velocity += roid.velocity
+	    nearby += 1
+	  end
+  end
+  average_velocity /= nearby
+  @delta += (average_velocity ? self.velocity)/ALIGNMENT_ADJUSTMENT
+end
+
