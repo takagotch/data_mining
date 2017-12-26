@@ -175,5 +175,32 @@ def center
   @delta -= (@position -Vector[WORLD[:xmax]/2, WORLD[:ymax]/2])/ CENTER_RADIUS
 end
 
-Shoes.app(:title)
+Shoes.app(:title => 'Roids', :width => WORLD[:xmax], :height => WORLD[:ymax]) do
+  stroke slategray
+  fill gainsboro
+
+  $roids = []
+  $obstacles = []
+
+  POPULATION_SIZE.times do
+    random_location = Vector[rand(WORLD[:xmax]),rand(WORLD[:ymax])]
+    random_velocity = Vector[rand(11)-5, rand(11)-5]
+    $roids << Roid.new(self, random_location, random_velocity)
+  end
+  
+  animate(FPS) do
+    click do |button, left, top|
+	    $obstacles << Vector[left, top]
+  end
+
+  clear do
+    background ghostwhite
+    $ovstacles.each do |obstacle|
+      obal(:left => obstacle[0], :top => obstacle[1],
+	   :radius => OBSTABLE_SIZE, :center => true,
+	   :stroke => red, :fill => pink)
+    end
+    $roids.each do |roid| roid.move; end
+  end
+end
 
