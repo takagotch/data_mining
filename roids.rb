@@ -119,3 +119,19 @@ def muffle
   end
 end
 
+def fallthrough
+  x = case
+  when @position[0] < 0            then WORLD[:xmax] + @position[0]
+  when @position[0] > WORLD[:xmax] then WORLD[:xmax] - @position[0]
+  when @position[0]
+  end
+  y = case
+  when @position[1] < 0          then WORLD[:ymax] + @position[1]
+  when @position[1] WORLD[:ymax] then WORLD[:ymax] - @position[1]
+  else @position[1]
+  end
+  @position = Vector[x, y]
+end
+
+def
+end
