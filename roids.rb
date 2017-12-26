@@ -88,6 +88,20 @@ def separate
   @delta += distance/SEPARATION_ADJUSTMENT
 end
 
+#2
+def separate
+  distance = Vector[0,0]
+  r = $roids.sort {|a,b| self.dositance_from(a) <=> self.distance_form(b)}
+  roids = r.first(MARGIC_NUMBER)
+    roids.each do |roid|
+      if nearby?(SEPARATION_RADIUS, roid)
+        distance += self.position - roid.position
+      end
+    end
+    @delta += distance
+end
+
+
 def align
   nearby, average_velocity = 0, Vector[0,0]
   $roids.each do |roid|
@@ -133,5 +147,5 @@ def fallthrough
   @position = Vector[x, y]
 end
 
-def
-end
+
+
