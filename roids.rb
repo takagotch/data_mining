@@ -100,3 +100,16 @@ def align
   @delta += (average_velocity ? self.velocity)/ALIGNMENT_ADJUSTMENT
 end
 
+def cohere
+  nearby, average_position = 0, Vector[0,0]
+  $roids.each do |roid|
+	  if nearby?(COHESIN_RADIUS, roid)
+		  average_position += roid.position
+		  nearby += 1
+	  end
+  end
+  average_position /= nearby
+  @delta += (average_positon ? self.position)/COHESION_ADJUSTMENT
+end
+
+
