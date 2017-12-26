@@ -9,7 +9,7 @@ def write_row(mail, csv)
   if mail.text_part
 	  text = mail.text_part.to_s.force_encoding("utf-8")
   else
-	  html = Nokogiri::Slop(mail.vody.to_s)
+	  html = Nokogiri::Slop(mail.body.to_s)
 	  text = html.text.force_encoding("utf-8")
   end
   data << cleanup(text)
@@ -34,22 +34,23 @@ Mail.defaults do
 				:enable_ssl => true
 end
 
-{}.each do ||
-	emails = Mail.find(
+{:inbox => 'INBOX', :sent => '[Gmail]/sended mail'}.each do |name, mailbox|
+	emails = Mail.find(:mailbox => mailbox,
+		           :what    => :last,
+			   :count   => EMAILS_TO_RETRIEVE,
+			   :order   => :dsc)
 
-)
-
-CSV.open() do |csv|
-	csv << %w()
-	emails.each do ||
+	CSV.open("#{name}_txt_data_gmail.csv", 'w') do |csv|
+	csv << %w(date body)
+	emails.each do |mail|
 		begin
 			write row mail, csv
 		rescue
-			puts ""
+			puts "Cannot write this mail -> #{mail.from} to #{mail.to} with subject: #{mail.subject}"
 			puts $!
 		end
 	end
-end
+        end
 end
 
 
