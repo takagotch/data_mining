@@ -45,28 +45,37 @@ class Roid
   end
 
   def within_fov?(roid)
-    v1 =
-    v2 =
-    cos_angle = v1.
-    Math.acros() < 0.75 * Math::PI
+	  v1 = self.velocity - self.position
+	  v2 = roid.position -self.position
+	  cos_angle = v1.inner_product(v1)/(v1.r*v2.r)
+	  Math.acos(cos_angle) < 0.75 * Math::PI
   end
 
   def draw
-    @slot.oval :left => @position[], :top => @position[], :radius => ROID_SIZE, 
+    @slot.oval :left => @position[0], :top => @position[1], :radius => ROID_SIZE, 
 	       :center => true
-    @slot.line @position[], @position[], @position[] - @celocity[],
-	       @position[] - @velocity[]
+    @slot.line @position[0], @position[1], @position[0] - @velocity[0],
+	       @position[1] - @velocity[1]
   end
 
   def move
-    @delta = Vector[]
-    %w().each do |action|
+    @delta = Vector[0,0]
+    %w(separate align cohere muffle avoid).each do |action|
       self.send action
     end
     @velocity += @delta
     @position += @velocity
     fallthrough and draw
   end
+end
+
+class Vector
+	def /(x)
+	  if (x != 0)
+		  Vector[self[0]/x.to_f, self[1]/x.to_f]
+	  else
+		  self
+	  end
 end
 
 
